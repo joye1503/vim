@@ -195,7 +195,23 @@ jobs:
       compiler: clang
       env: *tiny-nogui
     - <<: *linux
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: xenial
+      name: tiny-nogui/clang
+      compiler: clang
+      env: *tiny-nogui
+    - <<: *linux
       name: tiny-nogui/gcc
+      compiler: gcc
+      env: *tiny-nogui
+    - <<: *linux
+      name: tiny-nogui/gcc
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: xenial
       compiler: gcc
       env: *tiny-nogui
     - <<: *linux
@@ -203,13 +219,37 @@ jobs:
       compiler: clang
       env: *tiny
     - <<: *linux
+      name: tiny/clang
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: xenial
+      compiler: clang
+      env: *tiny
+    - <<: *linux
       name: tiny/gcc
       compiler: gcc
+      env: *tiny
+    - <<: *linux
+      name: tiny/gcc
+      compiler: gcc
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: xenial
       env: *tiny
     - <<: *linux
       name: small/gcc
       compiler: gcc
       env: *small
+    - <<: *linux
+      name: small/gcc
+      compiler: gcc
+      env: *small
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: xenial
     - <<: *linux
       name: normal+shadow/clang
       compiler: clang
@@ -217,8 +257,28 @@ jobs:
         - *normal
         - *shadowopt
     - <<: *linux
+      name: normal+shadow/clang
+      compiler: clang
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: xenial
+      env:
+        - *normal
+        - *shadowopt
+    - <<: *linux
       name: normal+shadow/gcc
       compiler: gcc
+      env:
+        - *normal
+        - *shadowopt
+    - <<: *linux
+      name: normal+shadow/gcc
+      compiler: gcc
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: xenial
       env:
         - *normal
         - *shadowopt
