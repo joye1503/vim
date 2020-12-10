@@ -391,7 +391,7 @@ jobs:
         - *unittests
         - *coverage
       after_success: *eval-coverage
-     - <<: *linux
+    - <<: *linux
       name: unittests+coverage/gcc
       arch: arm64-graviton2
       virt: lxd
