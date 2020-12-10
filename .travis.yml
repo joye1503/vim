@@ -198,7 +198,7 @@ jobs:
       arch: arm64-graviton2
       virt: lxd
       group: edge
-      dist: xenial
+      dist: bionic
       name: tiny-nogui/clang
       compiler: clang
       env: *tiny-nogui
@@ -211,7 +211,7 @@ jobs:
       arch: arm64-graviton2
       virt: lxd
       group: edge
-      dist: xenial
+      dist: bionic
       compiler: gcc
       env: *tiny-nogui
     - <<: *linux
@@ -223,7 +223,7 @@ jobs:
       arch: arm64-graviton2
       virt: lxd
       group: edge
-      dist: xenial
+      dist: bionic
       compiler: clang
       env: *tiny
     - <<: *linux
@@ -236,7 +236,7 @@ jobs:
       arch: arm64-graviton2
       virt: lxd
       group: edge
-      dist: xenial
+      dist: bionic
       env: *tiny
     - <<: *linux
       name: small/gcc
@@ -249,7 +249,7 @@ jobs:
       arch: arm64-graviton2
       virt: lxd
       group: edge
-      dist: xenial
+      dist: bionic
     - <<: *linux
       name: normal+shadow/clang
       compiler: clang
@@ -278,7 +278,7 @@ jobs:
       arch: arm64-graviton2
       virt: lxd
       group: edge
-      dist: xenial
+      dist: bionic
       env:
         - *normal
         - *shadowopt
@@ -302,7 +302,29 @@ jobs:
         - *coverage
       after_success: *eval-coverage
     - <<: *linux
+      name: huge+coverage/clang
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: bionic
+      compiler: clang
+      env:
+        - *linux-huge
+        - *coverage
+      after_success: *eval-coverage
+    - <<: *linux
       name: huge+coverage/gcc
+      compiler: gcc
+      env:
+        - *linux-huge
+        - *coverage
+      after_success: *eval-coverage
+    - <<: *linux
+      name: huge+coverage/gcc
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: bionic
       compiler: gcc
       env:
         - *linux-huge
@@ -310,6 +332,25 @@ jobs:
       after_success: *eval-coverage
     - <<: *linux # ASAN
       name: huge+asan/clang
+      compiler: clang-11
+      addons:
+        apt:
+          sources:
+            - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-11 main'
+              key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+          packages:
+            - *apt-packages
+            - clang-11
+      env:
+        - *linux-huge
+        - *asan
+      after_failure: *asan_symbolize
+    - <<: *linux # ASAN
+      name: huge+asan/clang
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: bionic
       compiler: clang-11
       addons:
         apt:
@@ -332,7 +373,30 @@ jobs:
         - TEST="-C src testgui"
       after_success: *eval-coverage
     - <<: *linux
+      name: huge-testgui+coverage/gcc
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: bionic
+      compiler: gcc
+      env:
+        - *linux-huge
+        - *coverage
+        - TEST="-C src testgui"
+      after_success: *eval-coverage
+    - <<: *linux
       name: unittests+coverage/gcc
+      compiler: gcc
+      env:
+        - *unittests
+        - *coverage
+      after_success: *eval-coverage
+     - <<: *linux
+      name: unittests+coverage/gcc
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: bionic
       compiler: gcc
       env:
         - *unittests
@@ -341,6 +405,16 @@ jobs:
     - <<: *linux
       name: vimtags/gcc
       compiler: gcc
+      env:
+        - *normal
+        - TEST="-C runtime/doc vimtags VIMEXE=../../${SRCDIR}/vim"
+    - <<: *linux
+      name: vimtags/gcc
+      compiler: gcc
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: bionic
       env:
         - *normal
         - TEST="-C runtime/doc vimtags VIMEXE=../../${SRCDIR}/vim"
