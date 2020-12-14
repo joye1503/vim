@@ -115,6 +115,7 @@ branches:
     - /^v[0-9]/
 
 script:
+  - lscpu
   - mkdir -p "$LOG_DIR"
   - NPROC=$(getconf _NPROCESSORS_ONLN)
   - set -o errexit
