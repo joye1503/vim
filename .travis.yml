@@ -196,6 +196,11 @@ jobs:
       compiler: clang
       env: *tiny-nogui
     - <<: *linux
+      name: tiny-nogui/clang
+      compiler: clang
+      arch: arm64
+      env: *tiny-nogui
+    - <<: *linux
       arch: arm64-graviton2
       virt: lxd
       group: edge
